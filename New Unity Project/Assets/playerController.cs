@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class playerController : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class playerController : MonoBehaviour
     private bool item9 = false;
     private bool door = false;
 
+    private bool finalItem1 = false;
+    private bool finalItem2 = false;
+    private bool finalItem3 = false;
+
     //items pickedup
     private bool item1PickedUp = false;
     private bool item2PickedUp = false;
@@ -36,9 +41,34 @@ public class playerController : MonoBehaviour
     private bool item8PickedUp = false;
     private bool item9PickedUp = false;
 
+    private bool finalItem1PickedUp = false;
+    private bool finalItem2PickedUp = false;
+    private bool finalItem3pickedUp = false;
+
+    public GameObject image1;
+    public GameObject image2;
+    public GameObject image3;
+    public GameObject finalItem_1;
+    public GameObject image4;
+    public GameObject image5;
+    public GameObject image6;
+    public GameObject finalItem_2;
+    public GameObject image7;
+    public GameObject image8;
+    public GameObject image9;
+    public GameObject finalItem_3;
+
+
     void Start()
     {
         rb2d.GetComponent<Rigidbody2D>();
+        image1.SetActive(false);
+        image2.SetActive(false);
+        image3.SetActive(false);
+        image4.SetActive(false);
+        image5.SetActive(false);
+        image6.SetActive(false);
+        image7.SetActive(false);
     }
     void Update()
     {
@@ -56,8 +86,7 @@ public class playerController : MonoBehaviour
        
 
     }
-
-   private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "item1")
         {
@@ -82,7 +111,7 @@ public class playerController : MonoBehaviour
         }
         else if (collision.gameObject.name == "item5")
         {
-            item = true;
+            item5 = true;
             print("true");
         }
         else if (collision.gameObject.name == "item6")
@@ -106,13 +135,27 @@ public class playerController : MonoBehaviour
             item9 = true;
             print("true");
         }
+        else if (collision.gameObject.name == "finalItem1")
+        {
+            finalItem1 = true;
+            print("true");
+        }
+        else if (collision.gameObject.name == "finalItem2")
+        {
+            finalItem2 = true;
+            print("true");
+        }
+        else if (collision.gameObject.name == "finalItem3")
+        {
+            finalItem3 = true;
+            print("true");
+        }
         else if (collision.gameObject.name == "door")
         {
             door = true;
             print("true");
         }
     }
-
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.name == "item1")
@@ -153,16 +196,23 @@ public class playerController : MonoBehaviour
             item7 = false;
             print("false");
         }
-        else if (collision.gameObject.name == "item8")
+
+        else if (collision.gameObject.name == "finalItem1")
         {
-            item8 = false;
+            finalItem1 = false;
             print("false");
         }
-        else if (collision.gameObject.name == "item9")
+        else if (collision.gameObject.name == "finalItem2")
         {
-            item9 = false;
+            finalItem2 = false;
             print("false");
         }
+        else if (collision.gameObject.name == "finalItem3")
+        {
+            finalItem3 = false;
+            print("false");
+        }
+
         else if (collision.gameObject.name == "door")
         {
             door = false;
@@ -171,72 +221,78 @@ public class playerController : MonoBehaviour
     }
     private void pickup()
     {
-        if (Input.GetKeyDown(KeyCode.F) && item1 == true)
+        if (Input.GetKeyDown(KeyCode.F) && item1 == true) //maleri
         {
             Destroy(GameObject.Find("item1"));
             PickedUp++;
             item1PickedUp = true;
+            image1.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item2 == true)
+        else if (Input.GetKeyDown(KeyCode.F) && item2 == true) //bog
         {
             Destroy(GameObject.Find("item2"));
             PickedUp++;
             item2PickedUp = true;
+            image2.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item3 == true)
+        else if (Input.GetKeyDown(KeyCode.F) && item3 == true) //brev
         {
             Destroy(GameObject.Find("item3"));
             PickedUp++;
             item3PickedUp = true;
+            image3.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item4 == true)
+        else if (Input.GetKeyDown(KeyCode.F) && item4 == true) //nøgle
         {
             Destroy(GameObject.Find("item4"));
-            PickedUp++;
+            PickedUp = 4;
             item4PickedUp = true;
+            image4.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item5 == true)
+
+        else if (Input.GetKeyDown(KeyCode.F) && item5 == true) // manual
         {
             Destroy(GameObject.Find("item5"));
-            PickedUp++;
+            PickedUp = 5;
             item5PickedUp = true;
+            image5.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item6 == true)
+
+        else if (Input.GetKeyDown(KeyCode.F) && PickedUp == 5) // bolt
         {
             Destroy(GameObject.Find("item6"));
             PickedUp++;
             item6PickedUp = true;
+            image6.SetActive(true);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item7 == true)
+        else if (Input.GetKeyDown(KeyCode.F) && item7 == true && item6PickedUp == true && item5PickedUp == true )
         {
             Destroy(GameObject.Find("item7"));
             PickedUp++;
             item7PickedUp = true;
+            image5.SetActive(false);
+            image6.SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.F) && item8 == true)
-        {
-            Destroy(GameObject.Find("item8"));
-            PickedUp++;
-            item8PickedUp = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.F) && item9 == true)
-        {
-            Destroy(GameObject.Find("item9"));
-            PickedUp++;
-            item9PickedUp = true;
-        }
+
 
     }
-
     private void nextLevel()
     {
-        if (door == true && Input.GetKeyDown("e") && PickedUp == 4)
+        if (door == true && Input.GetKeyDown("f") && PickedUp == 3)
         {
             SceneManager.LoadScene("køkken");
         }
+
+        else if (door == true && Input.GetKeyDown("f") && PickedUp == 4)
+        {
+            SceneManager.LoadScene("garage");
+        }
+
+        else if (door == true && Input.GetKeyDown("f") && item7PickedUp == true)
+        {
+            SceneManager.LoadScene("win");
+        }
     }
-
-
 }
 
 
